@@ -9,6 +9,7 @@ fun main() {
     stringProperties(myString)
     stringFunction(myString)
     stringExtension(myString)
+    stringFunction(myString)
 }
 
 /*
@@ -45,6 +46,7 @@ fun stringFunction(myString: String) {
     println("Plus ${myString.plus(" add plus")}")
     println("plus $myString")
 
+
     // Returns the Characters in that range from the string, includes white space
     println("myString subSequence: ${myString.subSequence(3, 12)}")
 }
@@ -66,5 +68,6 @@ fun stringExtension(myString: String) {
 
 
 fun stringExtensionFunction(myString: String) {
-
+    var string2: String = "Test"
+    // ALL
 }
