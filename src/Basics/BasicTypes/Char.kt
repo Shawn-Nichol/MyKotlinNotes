@@ -16,6 +16,7 @@ fun main() {
 
     charFunction()
     charCompanionObject()
+    charExtensionFunctions()
 }
 
 fun charFunction() {
@@ -52,6 +53,7 @@ fun charFunction() {
 fun charCompanionObject() {
     var char1 = 'A'
 
+
     println()
     println("Companion Object")
     println("Max code point = $MAX_CODE_POINT")
@@ -66,8 +68,25 @@ fun charCompanionObject() {
     println("Size Bits = $SIZE_BITS")
     println("Size Bytes = $SIZE_BYTES")
 
+}
 
+fun charExtensionFunctions() {
+    var char1 = 'D'
+    var char2 = 'b'
 
+    println()
+    println("Extension function")
+    println("coerceAtLeast ${char1.coerceAtLeast('b')}")
+    println("coerceAtLeast ${char1.coerceAtLeast('E')}")
+
+    println("char1 equal D ${char1.equals('D')}")
+    println("char1 equals char2 ${char1.equals(char2)}")
+
+    println("Title case ${char1.isTitleCase()}")
+    println("Concatnate with plus: ${char1.plus(" testing")}")
+
+    println("To title ${char2.toTitleCase()}")
+    println("Until ${char1.until('s')}")
 
 
 
