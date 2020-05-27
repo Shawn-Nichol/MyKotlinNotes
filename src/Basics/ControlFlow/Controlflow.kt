@@ -29,8 +29,8 @@ fun ifExample() {
 
 
 fun whenExample() {
-    println("When examples")
     println()
+    println("When examples")
 
     var x: Int = 2
     // Statement
@@ -62,8 +62,8 @@ fun whenExample() {
 
 fun forLoopsExamples() {
 
-    println("ForLoops")
     println()
+    println("ForLoops")
 
     var myArray = arrayOf(1,2,3,4,5)
 
@@ -91,6 +91,8 @@ fun forLoopsExamples() {
 
 
 fun whileLoopExample() {
+    println()
+    println("While examples")
     var x = 0
 
     while (x <= 5) {
