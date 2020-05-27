@@ -1,0 +1,64 @@
+In kotlin, 'if' is an expression it returns a value. Therefore there is no ternary operator (condition ? then: else),
+because ordinary 'if' works fine in this role.
+
+```
+    if(a > b) a else b
+```
+
+'if' branches can be blocks
+```
+    if(a > b) {
+        max = a
+    } else {
+        max = b
+    }
+```
+
+if you're using 'if' as an expression rather than a statement(returning its value or assigning it to a variable), the
+expression is required to have an else branch.
+
+'When' replaces the switch operator of c like languages
+```
+    when(x) {
+        1 -> print("x = 1")
+        2 -> print("x = 2")
+        else -> {
+            print("x is neither 1 nor 2")
+        }
+```
+'When' matches its arugment against all branches sequentially until some branch condition is satisfied. 'when' can be
+used either as an expression or as a statement. If it is used as expression, the value of the satisfied branch becomes
+the value of the overall expression. If is used as a statement, the values of individual branches are ignored.
+
+The else branch is evaluated if none of the other branch conditions are satisfied. if 'when' is used as expression
+the else branch is mandatory unless all options are covered.
+
+When is able to use 'is' or '!is' to check that a value is of a particular type.
+
+'when' should be used to replace if else if statements.
+
+For Loops
+'for' loop iterates through anything that provides an iterator. THis equivalent to the foreach loop in languages like C#
+
+to iterate over a range of numbers, use a range expression
+```
+    for (i in 1..3) {
+        println(i)
+    }
+```
+
+Iterate through an array
+```
+    for(i in myArray.indices) {
+        println(array[i])
+    }
+```
+
+
+alternatively you can us the withIndex library function
+```
+    for((index, value) in array.withIndex()) {
+        println("the element at $index is $value")
+    }
+```
+
