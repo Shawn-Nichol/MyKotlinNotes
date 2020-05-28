@@ -1,4 +1,4 @@
-package Basics.ReturnsAndJumps
+package B_Basics.ReturnsAndJumps
 
 fun main() {
     foo()

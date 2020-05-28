@@ -1,4 +1,4 @@
-package Basics.BasicTypes
+package B_Basics.BasicTypes
 
 /*
 Array instances cn be created using the arrayOf, ArrayOfNulls and emptyArray

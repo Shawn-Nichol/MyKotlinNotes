@@ -1,0 +1,57 @@
+Classes in Kotlin are declared using the keyword 'class'.
+```
+    class Invoice{....}
+```
+The class declaration consists of the class name, the class header(type parameters, the primary constructor) and class
+body surrounded by curly braces. Both the header and the body are optional, if the class  has no body the curly braces
+can be omitted.
+
+Constructors
+A class in Kotlin can have a primary constructor and one or more secondary constructors. The primary constructor is part 
+of the class header: it goes after; it goes after the class name
+```
+    class Person constructor(firstName: String) {....}
+``` 
+
+If the primary constructor does not have a body
+class Person(firstName: String) {....}
+
+The primary constructor cannot contain any code. Initialization code can be placed in initializer blocks, which are prefixed 
+with the init keyword.
+During an instance initialization, the initializer blocks are executed in the same order as they appear in the class body,
+interleaved with property initializers:
+```
+ class InitOrderDemo(name: String) {
+    val firstProperty = "first property: $name.also(::println)"
+    
+    init {
+        println("First initializer block that prints ${name}") 
+    }
+    
+    val secondProperty = "Second property: ${name.length}".also(::println)
+    init {
+        println("Second initializer block that prints ${name.length}")
+    } 
+ }
+```
+
+Note that parameters of the primary constructor can be used in the initializer blocks they can also be used in property 
+initializers declared in the class body:
+```
+class Customer(name: String) {
+    val customerKey = name.toUpperCase()
+}
+```
+
+Kotlin has a concise syntax for declaring poperties and initializing them from the primary constructor.
+```
+class Person(val firstName: String, val lastName: String, var are: Int) {...}
+```
+
+Much the same way as regular properties, the properties declared in the primary constructor can be mutable or read only
+
+If the constructor has annotations or visibility modifiers, the constructor keyword is required and the modifiers go before it:
+
+```
+class Customer public @Inject constructor(name: String) {/....}
+```

@@ -1,4 +1,4 @@
-package Basics.BasicTypes
+package B_Basics.BasicTypes
 
 fun main() {
 
