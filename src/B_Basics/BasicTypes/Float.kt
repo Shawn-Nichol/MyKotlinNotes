@@ -1,4 +1,4 @@
-package Basics.BasicTypes
+package B_Basics.BasicTypes
 
 import kotlin.Float.Companion.MAX_VALUE
 import kotlin.Float.Companion.MIN_VALUE

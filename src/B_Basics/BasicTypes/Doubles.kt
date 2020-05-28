@@ -1,10 +1,9 @@
-package Basics.BasicTypes
+package B_Basics.BasicTypes
 
 import java.util.concurrent.TimeUnit
 import kotlin.Double.Companion.MAX_VALUE
 import kotlin.Double.Companion.MIN_VALUE
 import kotlin.time.ExperimentalTime
-import kotlin.time.days
 import kotlin.time.toDuration
 
 @ExperimentalTime
