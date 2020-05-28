@@ -9,7 +9,7 @@ fun main() {
 
 fun arrayFunction() {
 
-    var array1 = arrayOf(0, 1, 2, 3, 4, 5, 5, 5)
+    var array1 = arrayOf(0, 1, 2, 3, 4, 5, 5, 25, 9, 8)
     var arrayNull= arrayOfNulls<Int>(5)
     var arrayEmpty = emptyArray<Int>()
 
@@ -73,6 +73,54 @@ fun arrayFunction() {
     println("Filter % 2 ${array1.filter { it % 2 == 0 }}")
 
     println("filterInstance ${array1.filterIsInstance<Int>()}")
+
+    println("find ${array1.find { it < 4 }}")
+
+    println("findLast ${array1.findLast { it == 4 }}")
+
+    println("first ${array1.first()}")
+    println("first or null ${array1.firstOrNull()}")
+
+    array1.iterator().forEach { println("Fore each $it")}
+
+    println("get or else ${array1.getOrElse(2){22}}")
+
+    println("get Index ${array1.indexOf(3)}")
+    println("get first Index ${array1.indexOfFirst { 5 == 5  }}")
+    println("get index of last ${array1.indexOfLast { 5== 5 }}")
+
+    println("isArrayOf ${array1.isArrayOf<Boolean>()}")
+    println("isArrayOf ${array1.isArrayOf<Int>()}")
+    println("is empty ${array1.isEmpty()}")
+    println("is not empty ${array1.isNotEmpty()}")
+    println("is null or empty ${array1.isNullOrEmpty()}")
+    println("ArrayNull is null or empty ${arrayNull.isNullOrEmpty()}")
+    println("ArrayEmpty is null or empty ${arrayEmpty.isNullOrEmpty()}")
+
+    println("last element ${array1.last()}")
+    println("last index of ${array1.lastIndexOf(5)}")
+
+    println("max ${array1.max()}, min ${array1.min()}")
+    println("array none ${array1.none()}")
+    println("arrayEmpty none ${array1.none()}")
+
+    println("Random ${array1.random()}")
+
+//    println("Reverse ${array1.reverse()}")
+    println("Sort ${array1.sorted()}")
+    println("Sort decending ${array1.sortedDescending()}")
+    println("array 1, $array1")
+
+    println("Sum array1 ${array1.sum()}")
+
+    println("Take ${array1.take(4)}")
+    println("take last ${array1.takeLast(4)}")
+    println("take last while ${array1.takeLastWhile { it > 5 }}")
+    println("take while ${array1.takeWhile { it <5 }}")
+
+    array1.toHashSet().forEach { println("$array1")  }
+
+
 
 
 

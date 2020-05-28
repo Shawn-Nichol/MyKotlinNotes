@@ -1,0 +1,27 @@
+A source file may start with a package declaration, All the contents of the source file are contained by the package
+declared. If the package is not specified the contents of such a file belong to the default package that has no name.
+
+Default Imports
+- kotlin.*
+- kotlin.annotation.*
+- kotlin.collections.*
+- kotlin.comparisons.*
+- kotlin.io.*
+- kotlin.ranges.*
+- kotlin.sequences.*
+- kotlin.text.*
+
+Additional packages are imported depending on the target platform.
+- jvm
+  - jav.lang.*
+  - kotlin.jvm.*
+- js
+  - kotlin.js.*
+
+Apart from the default imports each file may contain its own import directives. The import keyword is not restrictive to
+importing classes; you can also use it to import other declarations:
+ - top-level functions and properties;
+ - functions and properties declared in object declarations
+ - enum constants.
+
+ If a top level declaration is marked private it is private to the file it's declared in.
