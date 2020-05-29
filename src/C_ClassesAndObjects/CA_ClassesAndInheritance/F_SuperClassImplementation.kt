@@ -3,10 +3,7 @@ package C_ClassesAndObjects.CA_ClassesAndInheritance
 /*
 Code in a derived class can call its super class functions adn property accessors implementations using the super keyword.
 */
-open class Rectangle {
-    open fun draw() {println("Drawing a rectangle")}
-    val borderColor: String get() = "black"
-}
+
 
 class FilledRectangle: Rectangle() {
 
@@ -43,6 +40,7 @@ fun main() {
     println("superClassImplementation")
     val rec = FilledRectangle()
     rec.draw()
+    println("${rec.draw()}")
     println()
     println("Inner class")
     rec.Filler().drawAndFill()
