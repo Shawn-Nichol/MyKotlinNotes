@@ -3,8 +3,9 @@ package C_ClassesAndObjects.CA_ClassesAndInheritance
 fun main() {
 
 }
-
+/*
 // The class can also declare secondary constructors, which are prefixed with constructor
+
 class Person{
     var childern: MutableList<Person> = mutableListOf<>()
     constructor(parent:  Person) {
@@ -43,3 +44,5 @@ class DontCreateMe private constructor() {
 // On the JVM, if all of the parameters of the primary constructor have default values, the compiler will generate an
 // additional parameterless constructor which will use the default values. This makes it easier to use kotlin with libraries such
 // as Jackson or JPA
+
+*/
