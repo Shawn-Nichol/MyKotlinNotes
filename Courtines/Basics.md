@@ -126,3 +126,9 @@ suspend fun doWorld() {
 }
 ```
 But what if the extracted function contains a coroutine builder which is invoked on the current scope? in this case, the suspend modifier on the extracted function i snot enough. Making doWorld an extension method on CoroutineScope is one of the solutions, but it may not always be applicalbe as it does not make the API clearer. The idiomatic solution is to have either an explicit CoroutineScope as a field in a class containing the target function or an implicit one when the outer class implements CoroutineScope. As a last resort, CoroutienScope can be used, but such an approach is structurally unsafe baecuase you non longer have control on the scope of execution of this methood. Only private APIs can use this builder. 
+
+
+runBlocking: Runs a new coroutine and blocks the current thread interruptibly unitl its completion. This function should nobe used from a coroutine. It desgiend to bridge regular bloacking code to libraries that are written in suspending sytle, to be use in the main function
+
+Join:
+Suspends the coroutine until this job is complete. This invocation resumes normally when the job is complete for any reason and the job of the invoking coroutine is still active. This function also starts the corresponding corutine if the job was still in new state. 
