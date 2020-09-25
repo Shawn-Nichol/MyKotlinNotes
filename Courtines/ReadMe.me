@@ -16,3 +16,6 @@ Call the specified suspending block witha given coroutine context, suspends unti
 
 ## NonCancellable
 A non-cancelable job that is always active. It is designe dfor withContext function to preven cancellation of code blocks that need to be executed without cancellation
+
+## Deferred
+Deferred value is a non blocking cancellable future it is a job with a result.  It is created with the async coroutine builder or via the constructor of CompletableDeferred calss. It is in active state while the value is being computed. 
