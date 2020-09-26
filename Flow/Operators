@@ -1,0 +1,20 @@
+## map
+map returns a flow containing the rsults of applying the given transform function  to each value of the orignal flow. 
+
+## filter
+returns a flow containing only values of the orignal flow that matches the given predicate. 
+
+## take
+Returns a flow that contains first count elements. When count elemeents are consumed, the orignail flow is cnacelled. Throws IllegalArguemtnException if count is not positive. 
+
+## zip
+Zip values fromt he current flow (this with other flow using provided transform function applied to each pair of values. The resulting flow completes as soon as one of the flows complettes and cancel is calle don the reamining flow. 
+
+It can be demonbstrated with the follwoing example
+```
+val flow = flowOf(1,2,3).onEach { delay(10) }
+val flow2 = flowOf("a", "b", "c").onEAch { delay(15) }
+flow.zip(flow2) {i, s -> i.toString(0 + S }.collect {
+  println(it) // will print "1a 2b 3c"
+}
+```
