@@ -76,3 +76,26 @@ If you are looking for perfromance and are sure that no concurrent emits and con
 - Changing the context of emission is prohibited, no matter whether it is withContext(ctx) or a builder argument
 - Collecting another flow from a sepaarate context is allowed, but it has the same effect as applying the flowOn operator to that flow, whic more efficient. 
 
+## Exception transparency
+Flow implementation snever catch or handle exceptions that occur in downstreamflows. From the implementation standpoint it means that calls to emit and emitAll shall never be wrapped into try {... } catch { ... } blocks. Exception handling in flows shall be performed with catch operator and it is designed to only catch exceptions coming form upstream flows while passin g all downstream exceptions. Similarly, terminal operatos like collect throw any unhandled exceptioins that occur in thier code or in upstream flows for example.
+```
+flow { emitData() }
+  .map { computeOne(it) }
+  .catch {... } // catches exceptioins i emitData and computeOne
+  .map { computeTwo(it) } 
+  .collect { process(it) } // throws exceptions fro process and computeTwo. 
+```
+
+The same reasoning can be applied to the onCompletion operator that is a declarative replacement for the finally block. 
+
+Failure to adhere to exception transparency requirement can lead to strange behaviors which make it hard to reason about the codde because an exception in the collect {... } could be somehow "caught" by an upstraem flow, limiting the ability of local reasoning about the code. 
+
+Flow machinery enforces exception transparency at runtime and throws  illegalStateException on any attempt to emit a value. If an exception has been thworn on previous attempt. 
+
+## Reactive streams
+Flow is Reactive Stream compliant, you can safely interop it with reactive  streams uisng Flow.asPublisher nad Publisher.asFlow from kotlinx-coroutines-reactive module. 
+
+## Not stale for inheritance
+Flow interface is not stable for inheritance in 3rd party libraries as snew mehtods might be added to this interface in the future, but is stable for use. Use flow {... } builder function to create an implementation. 
+
+## Functions
