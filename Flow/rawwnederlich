@@ -1,0 +1,187 @@
+Kotlin flow is a new stream processing API devloped by JetBrains, the company behind the kotlin language. It's an implementation of the Reactive stream specification, an initiative whose goal is to provide a standard for asynchronous tream processing. 
+
+By using flow to handle streams of avlues, you can transform data in complex multi-threaded ways, by writing justa  a small amount of code. 
+
+## Returning multipe values
+YOu probalby know that suspending functions cna return a single value asynchronously. When using suspending functions, you don't have to worry about threading, the coroutine ApI does that for you.
+
+Flow, however, can return multiple values asynchronously, and over time. Asynchronous operations are operations you need to wait on, suhc as network requests. You never know how long these operations might take! they cana take anwhere from a couple of milliseconds to several seconds to geta a response. Any long-running operation should be asynhronous because actively watiing for them can freeze your programs. 
+You'll see how returning values uing suspending function is very much different from the flow API, with a few examples
+
+## List
+```
+suspend fun getValues(): List<Int> {
+  delay(1000)
+  reutrn listOf(1, 2, 3)
+}
+```
+
+This function computes values and ads those values into a list. delay() simulates a long-running operation.like you would have using a remote API. 
+
+Now add a function process these values. 
+```
+fun processValues() {
+  runBlocking {
+    val values = getValues()
+    for(values in values) {
+      println(value)
+    }
+  }
+}
+```
+
+Now call process values from the main()
+```
+fun main() {
+  processValue()
+}
+```
+
+Run the code and you'll get the following output. 
+```
+1
+2
+3
+```
+
+When you call getValues(), it returns a list with three values. You then use those values in processValues(). Within a for loop, you iterate over the list and print out the values. 
+Avisula representation of the fuction is the following. 
+
+This is fine for three values. But not if it takes a lot of time to compute these values. In that case, you'd have to wait for all of the values to be computed. If each value takes a seocnd, you would wait hours for thousand of values. 
+
+It's very inefficient as it adds aextra delay to data processing. Ideally,you want to start processing each list item as soon as it becomes available. Sequences allow you to do this. 
+
+## sequence 
+Sequences are very similar to lists. But unlike lists, they are lazily evaluated. This means they produce values as you iterate over them, instead of producitn them all at once. Refactore getValues() to return a Sequence:
+```
+suspend fun getValeus(): sequence<Int> = sequence {
+  Thread.sleep(250)
+  yield(1)
+  Thread.sleep(250)
+  yield(2)
+  Thread.sleep(250)
+  yeild(3)
+}
+```
+You'll get the same result as last time but this time you won't have to wait for all the values. You'l produce tand consume them one at a time. 
+```
+1
+2
+3
+```
+
+Now instead of waiting for all of the items, processValues() consumes each item as getValues() produces it
+
+Sequences use iterators under the hood and block while waiting for the next tiem. This works when returning a simple list, but what if your application needs to commmunicate witha astreaming API. 
+
+## Channel
+Streaming API aare almost the exact opposite of REST APIs. When communicating with a rest API, you make a request and teh API sendds a response. A streaming API works differently. It connects to a client and continuously listens to new information, over time. Twitter, for example, provides a streaming API that you can use to stream tweets in real time. 
+
+You can use Sequence s for synchronous streams. But you need a different solultion for asynchronous streams. 
+
+For asynchronous streams, you  use channels from Kotlin Coroutines. Conceptually, you can think of channlels as pipes. YOu send items through one pipe and receive a response throught the other. However, a channel respresentsa hot stream of values. Once again, hot streams start producing values immediately. 
+
+And this introdueecs another set of challenges. 
+
+## Hot Versus cold streams
+A channel, which is hot stream, will produce values even if aren't listening to them on the  other side. And if you are not listening to the strea, you are losing values. 
+
+In the following diagram, getValues() emits the items via a channel. processValues() receives 1,2,3 and then it stops listening for items. The channel is still producing the items, even when no one is listening. 
+
+In practice, you can use a channel to have an open network connection. But that can lead to memory leaks. Or you could forget to subscribe to a channel, and lose values.
+
+Hot streams push values even when there is no one sonsuming them. However, cold streams start pusing values only when oyu start collecting!
+
+And kolin Flow is an  implementation of cold streams, powered by kotlin coroutines
+
+Kotlin Flow basics
+Flow is a stream that produces values ayschronously. Furthermore, flow uses coroutines internally. And becuase of this, it enjoys all the poerks of structured concurrency.
+
+With structured concurrency, coroutines live for a lmited amount of time. THis time is connected to the CoroutineScope you start your coroutines in.
+
+When you cancel the scope, you also releasea ny running coroutines. The same rules apply to Koltin Flow as well. When you cancel the scope, you also dispose of the flow. YOu don't have to free up memory manually!
+
+There are some similarities between kolin flow, livedata and RxJava. All of them provide a way to implement the observer pattern in your code.
+
+- LiveData is ssimple observable data holder. It's best used to store UI state, such as lists of items. It's easy to learn and work with. But it doesn't provide much more than that
+
+- RxJava is very powerful tool for reactive streams. It has many features and a plethora of transformation operators. But it has a steep learning curve!
+
+- Flow falls somewhere in between liveData and RxJava. It's very powerful but also very esasy to use the Flow API even looks a lot like RxJava
+
+Both Kotlin Flow and RxJava are implementations fo the Reactive Stream specification. 
+
+However, Flow uses coroutines internally and doesn't have som eof the features RxJava has. Partly becuase it doesn't  need some features, and partly becuase some features are stioll being developed. 
+
+## Flow Builders
+Make sure to add the imports from the kotlinx.coroutines package
+Here you're using flow() to create a Flow from a supendable lambda block. Inside the block, you declare names and assigning it to a list of names. 
+Next, you used a for loop to go through the list of name and emit each name after a small delay. The flow uses emit() send values to consumers.
+```
+val namesFlow = flow {
+  val names = listOf("jody", "Steve", "Lance", "Joe")
+  for (name in names) {
+    delay(100)
+    emit(name)
+  }
+}
+```
+
+
+There are other flow builders that you can use for easy Flow declaration. For example you can use flowOf() to createa Flow from a fixed set of values. 
+```
+val nameFlow = flowOf("Jody", "Steve", "lance", "Joe")
+```
+
+Or you can convert various collections and sequences to a Flow
+```
+val namesFlow = listOf("Jody", "steve", "lance", "Joe").asFlow()
+```
+
+## Flow operators
+Moveover, you can use operators to transform Flows, as you would do with collections or sequences There are two types of operatiors available inside the Flow intermediate and terminal
+
+Intermediate Operators 
+```
+fun main() = runBlocking {
+  namesFlow
+    .map { name -> name.length }
+    .filter {length -> length < 5 }
+  println()
+} 
+```
+
+Here, you used the Flow of names from earlier and you applied two intermediate operators to it.
+- map transforms each value to another value. here you transformed names value to their length
+- filter selects value that meet a condition. Here you chose values that are less than five. 
+
+The important thing to notice here is the block of codce inside each of these operators. These blocks of code can call suspendin functions! so you can also delay within these blocks. Or you can callother supsendinf functions! 
+
+Flow will emit values one at a time. YOu then apply each operator to each of the values, once again, one at a time. And finally, when you start consuming values, you'll receive them in the same order. 
+
+You'll notice that nothing happens! this becuase intermediate operators are cold. When you invoke an intermediate operation on a Flow, the operation is not executed immediately. Instead, you return the transformed Flow, which is still cold. The operation s execute only when you invoke a terminal operator on the final stream.
+
+Terminal Operators
+Because Flows are cold, they won't produce values until a terminal operator is called. Terminal operators are supsending functions that start the collction of the flow. When  you invoke a terminal operator, you invoke all the intermediate operatosrs along with it 
+
+As you start collecting values, you get one at a time, and you don't block while wating for new values! 
+```
+fun main() = runBlocking {
+  namesFlow
+    .map { name -> name.length }
+    .filter { length -> length < 5 }
+    .collect { println(it) }
+  println()
+```
+Since collect() is a suspending function, it can only be called from a coroutine or another supendinf function. This is why you wrap the code with runBlocking(). 
+
+Build and run the code by clickgin the play button. You'll get the following output: 
+```
+4
+3
+```
+
+collect() is the most basic terminal operator. It collects values from a Flow and executes an action with each item. In this case, you're printing a n item to the console. There are other terminal operators available; you'lll learn about them later in this tutorial. 
+
+## Flow on Android
+Now
