@@ -69,3 +69,14 @@ for(value in map.values) {
   println(values)
 }
 ```
+
+# While loop
+THe while loop must be an actual boolean expression.
+```
+var x = 0
+while (x < 10) {
+  println(x)
+  x++
+}
+```
+The loop variables must be declared outside the while loop, and are therefore available for inspection afterwards, at which point they will contina the values that made the loop condition false. 
